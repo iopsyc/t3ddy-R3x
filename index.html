@@ -5,19 +5,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>TEDY R3X · Aurora Atelier</title>
   <meta name="description" content="TEDY R3X — Aurora Atelier · Wonders Line. Flux Visual Series. Jazz × RYA." />
+
   <style>
     :root{
       --bg:#05040a; --fg:#f7f6ff; --muted:rgba(247,246,255,.72);
       --card:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.10);
       --glow: 0 18px 80px rgba(0,0,0,.70); --r:22px;
+      --pink: rgba(255,138,216,.95);
+      --cyan: rgba(122,252,255,.95);
+      --lilac: rgba(199,183,255,.95);
     }
     *{box-sizing:border-box}
-    body{margin:0;color:var(--fg);background:var(--bg);
+    body{
+      margin:0; color:var(--fg); background:var(--bg);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       overflow-x:hidden;
     }
 
-    /* Aurora */
+    /* Aurora background */
     .bg{
       position:fixed; inset:-20vh -20vw; z-index:-2; pointer-events:none;
       background:
@@ -29,7 +34,7 @@
       opacity:.95;
     }
 
-    /* Symbols */
+    /* Symbols falling */
     .symbols{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.55}
     .sym{
       position:absolute; top:-10vh;
@@ -44,6 +49,7 @@
       to{ transform: translateY(120vh) translateX(20px) rotate(18deg); opacity:.05 }
     }
 
+    /* Layout */
     .wrap{max-width:1120px;margin:0 auto;padding:34px 18px 80px}
     header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:22px}
     .brand{display:flex;flex-direction:column;gap:6px}
@@ -83,7 +89,6 @@
     }
     .meta{font-size:14px;color:var(--muted);line-height:1.7}
     .ctaRow{display:flex;gap:10px;flex-wrap:wrap}
-
     .btn{
       border:1px solid var(--stroke);
       background:rgba(255,255,255,.06);
@@ -93,6 +98,7 @@
       transition:.2s transform, .2s background;
     }
     .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.10)}
+    .mini{font-size:12px; padding:9px 12px; border-radius:999px;}
 
     .sectionTitle{margin:34px 0 14px;display:flex;align-items:center;justify-content:space-between}
     .sectionTitle h2{margin:0;font-size:16px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.82)}
@@ -129,7 +135,7 @@
     .x{cursor:pointer; padding:6px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.15)}
     .x:hover{background:rgba(255,255,255,.08)}
 
-    /* Intro overlay */
+    /* Intro overlay (reel portal) */
     .intro{
       position:fixed; inset:0; z-index:60;
       display:grid; place-items:center;
@@ -138,30 +144,88 @@
     }
     .intro.hidden{display:none}
     .introCard{
-      width:min(980px, 92vw);
+      width:min(420px, 92vw);
       border:1px solid rgba(255,255,255,.16);
-      border-radius:28px;
+      border-radius:32px;
       overflow:hidden;
       background:rgba(10,10,14,.55);
       box-shadow: var(--glow);
+      position:relative;
     }
+
+    .videoWrap{position:relative;}
     .introVideo{
-      width:100%; aspect-ratio: 16/9; display:block;
+      width:100%;
+      max-height:70vh;
+      aspect-ratio: 9 / 16;
+      display:block;
       background:#000;
       object-fit:cover;
     }
-    .introBar{
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
-      padding:14px 16px;
+
+    /* Performative text overlay */
+    .overlay{
+      position:absolute; inset:0;
+      display:flex; flex-direction:column; justify-content:space-between;
+      padding:14px;
+      pointer-events:none;
     }
-    .introTitle{
-      display:flex; flex-direction:column; gap:4px;
+    .overlayTop{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
     }
+    .stamp{
+      pointer-events:none;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.25);
+      backdrop-filter: blur(10px);
+      padding:8px 10px;
+      border-radius:16px;
+      font-size:11px;
+      color:rgba(255,255,255,.78);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      width:max-content;
+      box-shadow: 0 0 30px rgba(122,252,255,.10);
+    }
+    .stamp .dot{display:inline-block;width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.65);margin-right:8px; box-shadow:0 0 12px rgba(122,252,255,.55)}
+
+    .typebox{
+      pointer-events:none;
+      border:1px solid rgba(255,255,255,.16);
+      background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.18));
+      backdrop-filter: blur(10px);
+      border-radius:18px;
+      padding:12px 12px;
+      box-shadow: 0 0 40px rgba(255,138,216,.12);
+    }
+    .type{
+      font-size:12px;
+      line-height:1.45;
+      color:rgba(255,255,255,.82);
+      white-space:pre-wrap;
+      min-height:40px;
+    }
+    .caret{display:inline-block;width:8px;animation: blink 1s steps(2,end) infinite; color:rgba(255,255,255,.75)}
+    @keyframes blink{50%{opacity:0}}
+
+    .sig{
+      display:flex; gap:10px; align-items:center;
+      font-size:11px; color:rgba(255,255,255,.70);
+      letter-spacing:.14em;
+      text-transform:uppercase;
+    }
+    .sig span{
+      padding:6px 10px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.22);
+      box-shadow: 0 0 26px rgba(199,183,255,.10);
+    }
+
+    .introBar{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 16px;}
+    .introTitle{display:flex; flex-direction:column; gap:4px;}
     .introTitle b{font-size:13px; letter-spacing:.16em; text-transform:uppercase}
     .introTitle span{font-size:12px; color:rgba(255,255,255,.65)}
-    .mini{
-      font-size:12px; padding:9px 12px; border-radius:999px;
-    }
+
     .toast{
       position:fixed; left:16px; bottom:16px; z-index:70;
       border:1px solid rgba(255,255,255,.14);
@@ -185,15 +249,37 @@
   <div class="bg"></div>
   <div class="symbols" id="symbols"></div>
 
-  <!-- INTRO OVERLAY -->
+  <!-- INTRO OVERLAY (REEL PORTAL) -->
   <div class="intro" id="intro">
     <div class="introCard">
-      <!-- autoplay muted works almost everywhere -->
-      <video class="introVideo" id="introVideo" src="luxemo.mp4" autoplay muted loop playsinline></video>
+      <div class="videoWrap">
+        <!-- autoplay muted works almost everywhere -->
+        <video class="introVideo" id="introVideo" src="luxemo.mp4" autoplay muted loop playsinline></video>
+
+        <!-- performative overlays -->
+        <div class="overlay">
+          <div class="overlayTop">
+            <div class="stamp"><span class="dot"></span>LUXEMO · PORTAL</div>
+            <div class="stamp" style="box-shadow:0 0 30px rgba(255,138,216,.10)">∞ 𓂀 ✶</div>
+          </div>
+
+          <div>
+            <div class="typebox">
+              <div class="type" id="type"></div>
+            </div>
+            <div style="height:10px"></div>
+            <div class="sig">
+              <span>Aurora Atelier</span>
+              <span>Jazz × RYA</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="introBar">
         <div class="introTitle">
-          <b>Luxemo · Portal</b>
-          <span>Bienvenid@s a TEDY R3X — Aurora Atelier</span>
+          <b>TEDY R3X</b>
+          <span>Bienvenid@s a la galería — Luxemo Army</span>
         </div>
         <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end">
           <button class="btn mini" id="soundBtn" title="Mute / Unmute">Sound: ON</button>
@@ -221,6 +307,7 @@
       </div>
     </header>
 
+    <!-- HERO -->
     <section class="hero">
       <div class="heroGrid">
         <img src="REVE/1.png" alt="TEDY R3X — Hero" />
@@ -245,6 +332,7 @@
       <div class="hint">click any piece to zoom</div>
     </div>
 
+    <!-- GALLERY GRID -->
     <section class="grid" id="grid">
       <!-- INTRO -->
       <div class="card" data-group="intro" onclick="openLightbox('INTRO/a.png','INTRO · a.png')"><img src="INTRO/a.png" alt="INTRO a"/><div class="cap"><span>INTRO</span><span>a.png</span></div></div>
@@ -255,7 +343,7 @@
       <div class="card" data-group="intro" onclick="openLightbox('INTRO/f.png','INTRO · f.png')"><img src="INTRO/f.png" alt="INTRO f"/><div class="cap"><span>INTRO</span><span>f.png</span></div></div>
       <div class="card" data-group="intro" onclick="openLightbox('INTRO/g.png','INTRO · g.png')"><img src="INTRO/g.png" alt="INTRO g"/><div class="cap"><span>INTRO</span><span>g.png</span></div></div>
 
-      <!-- REVE -->
+      <!-- REVE (ajusta las que quieras mostrar) -->
       <div class="card" data-group="reve" onclick="openLightbox('REVE/2.png','REVE · 2.png')"><img src="REVE/2.png" alt="REVE 2"/><div class="cap"><span>REVE</span><span>2.png</span></div></div>
       <div class="card" data-group="reve" onclick="openLightbox('REVE/3.png','REVE · 3.png')"><img src="REVE/3.png" alt="REVE 3"/><div class="cap"><span>REVE</span><span>3.png</span></div></div>
       <div class="card" data-group="reve" onclick="openLightbox('REVE/4.png','REVE · 4.png')"><img src="REVE/4.png" alt="REVE 4"/><div class="cap"><span>REVE</span><span>4.png</span></div></div>
@@ -280,8 +368,8 @@
   </div>
 
   <script>
-    // Symbols
-    const glyphs = ["∞","𓂀","✶","♡","✧","✦","☆","♩","♫","♪","☀","✨"];
+    // Symbols (pastel neon)
+    const glyphs = ["∞","𓂀","✶","♡","✧","✦","☆","♩","♫","♪","☀","✨"]; 
     const symWrap = document.getElementById("symbols");
     for(let i=0;i<36;i++){
       const s=document.createElement("div");
@@ -292,6 +380,9 @@
       s.style.animationDelay=(-Math.random()*18)+"s";
       s.style.fontSize=(12+Math.random()*18)+"px";
       s.style.opacity=(0.25+Math.random()*0.55);
+      // soft neon drift colors
+      const c = ["var(--pink)","var(--cyan)","var(--lilac)"][Math.floor(Math.random()*3)];
+      s.style.color = c;
       symWrap.appendChild(s);
     }
 
@@ -322,7 +413,6 @@
     }
     window.openLightbox=openLightbox;
     window.closeLightbox=closeLightbox;
-
     document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeLightbox(); });
 
     // Audio logic (autoplay attempt + fallback)
@@ -339,7 +429,6 @@
         await audio.play();
         toast.classList.remove("show");
       }catch(e){
-        // blocked until user interaction
         toast.classList.add("show");
       }
       updateSoundLabel();
@@ -364,13 +453,44 @@
       if(userMuted){ audio.muted = true; }
       await tryPlayAudio();
       intro.classList.add("hidden");
-      // scroll to main content smoothly
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
+    // Performative typed text
+    const typeEl = document.getElementById("type");
+    const lines = [
+      "Lumina Eterna Ego Sum",
+      "TEDY R3X · Urban Authority",
+      "Wonders Line · Aurora Atelier",
+      "∞ 𓂀 ✶  —  enter the gallery"
+    ];
+    const full = lines.map(l=>l).join("
+");
+    let idx = 0;
+
+    function render(){
+      const shown = full.slice(0, idx);
+      typeEl.innerHTML = shown.replace(/
+/g, "<br>") + '<span class="caret">▍</span>';
+    }
+
+    function tick(){
+      if(idx <= full.length){
+        idx += 1;
+        render();
+        const ch = full[idx-1] || "";
+        const speed = ch === "
+" ? 220 : 28 + Math.random()*40;
+        setTimeout(tick, speed);
+      } else {
+        // subtle loop: blink caret forever
+        render();
+      }
+    }
+
     // start attempts
     tryPlayAudio();
+    tick();
   </script>
 </body>
 </html>
-
