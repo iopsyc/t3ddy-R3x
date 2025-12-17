@@ -3,494 +3,594 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TEDY R3X · Aurora Atelier</title>
-  <meta name="description" content="TEDY R3X — Aurora Atelier · Wonders Line. Flux Visual Series. Jazz × RYA." />
+  <title>LUXEMO · PORTAL — TEDY R3X</title>
+  <meta name="description" content="TEDY R3X — Luxemo Portal. Aurora Atelier × Jazz × RYA. Flux visual series." />
 
   <style>
     :root{
-      --bg:#05040a; --fg:#f7f6ff; --muted:rgba(247,246,255,.72);
-      --card:rgba(255,255,255,.06); --stroke:rgba(255,255,255,.10);
-      --glow: 0 18px 80px rgba(0,0,0,.70); --r:22px;
-      --pink: rgba(255,138,216,.95);
-      --cyan: rgba(122,252,255,.95);
-      --lilac: rgba(199,183,255,.95);
+      --bg:#07070c;
+      --glass: rgba(255,255,255,.08);
+      --glass2: rgba(255,255,255,.12);
+      --stroke: rgba(255,255,255,.18);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 28px;
     }
+
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
-      margin:0; color:var(--fg); background:var(--bg);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(166,86,255,.12), transparent 60%),
+        radial-gradient(1200px 800px at 80% 20%, rgba(0,255,240,.10), transparent 60%),
+        radial-gradient(900px 700px at 50% 90%, rgba(255,130,190,.08), transparent 60%),
+        var(--bg);
       overflow-x:hidden;
     }
 
-    /* Aurora background */
-    .bg{
-      position:fixed; inset:-20vh -20vw; z-index:-2; pointer-events:none;
-      background:
-        radial-gradient(60vw 40vw at 20% 15%, rgba(140,120,255,.22), transparent 60%),
-        radial-gradient(55vw 35vw at 80% 20%, rgba(0,255,220,.14), transparent 60%),
-        radial-gradient(60vw 40vw at 60% 85%, rgba(255,120,190,.14), transparent 60%),
-        radial-gradient(45vw 30vw at 10% 85%, rgba(255,220,120,.10), transparent 60%);
-      filter: blur(18px) saturate(120%);
-      opacity:.95;
+    /* symbols layer (no bloquea clicks) */
+    #symbolsLayer{
+      position:fixed;
+      inset:0;
+      pointer-events:none; /* CLAVE: no se come los clicks */
+      z-index:0;
     }
 
-    /* Symbols falling */
-    .symbols{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.55}
-    .sym{
-      position:absolute; top:-10vh;
-      font-size:16px; color:rgba(210,200,255,.85);
-      text-shadow: 0 0 18px rgba(200,160,255,.35);
-      animation: fall linear infinite;
-      filter: blur(.2px);
-    }
-    @keyframes fall{
-      from{ transform: translateY(-15vh) translateX(0) rotate(0deg); opacity:0 }
-      10%{opacity:.9}
-      to{ transform: translateY(120vh) translateX(20px) rotate(18deg); opacity:.05 }
+    .wrap{
+      position:relative;
+      z-index:1;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px 16px 60px;
     }
 
-    /* Layout */
-    .wrap{max-width:1120px;margin:0 auto;padding:34px 18px 80px}
-    header{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:22px}
-    .brand{display:flex;flex-direction:column;gap:6px}
-    .kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.70)}
-    h1{margin:0;font-size:40px;letter-spacing:.5px}
-    .sub{margin:0;color:var(--muted);line-height:1.5;max-width:62ch}
+    .portal{
+      width:min(980px, 96vw);
+      display:grid;
+      gap:18px;
+    }
 
-    .pillbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    /* top bar */
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
     .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
       border:1px solid var(--stroke);
-      background:rgba(0,0,0,.22);
-      color:rgba(255,255,255,.85);
-      padding:8px 12px;border-radius:999px;
-      font-size:13px;cursor:pointer;user-select:none;
+      background: linear-gradient(to bottom, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border-radius:999px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
       backdrop-filter: blur(10px);
-      transition:.2s transform, .2s background;
+      -webkit-backdrop-filter: blur(10px);
+      font-size:12px;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.88);
     }
-    .pill:hover{transform:translateY(-1px); background:rgba(255,255,255,.08)}
-    .pill.active{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.18)}
+    .icons{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border:1px solid var(--stroke);
+      background: linear-gradient(to bottom, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border-radius:999px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size:16px;
+      color:rgba(255,255,255,.85);
+    }
+
+    /* main card */
+    .card{
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(to bottom, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow:hidden;
+    }
+
+    /* intro layout */
+    #intro{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      padding:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 860px){
+      #intro{grid-template-columns:1fr}
+    }
 
     .hero{
-      position:relative;border-radius:28px;overflow:hidden;
-      border:1px solid var(--stroke);
-      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      box-shadow: var(--glow);
-    }
-    .heroGrid{display:grid;grid-template-columns:1.2fr .8fr}
-    .hero img{width:100%;height:100%;object-fit:cover;display:block;min-height:380px}
-    .heroSide{padding:22px;display:flex;flex-direction:column;gap:14px;justify-content:space-between}
-    .tag{
-      display:inline-flex;gap:8px;align-items:center;
-      padding:8px 12px;border-radius:999px;
-      border:1px solid var(--stroke);
-      background:rgba(0,0,0,.20);
-      font-size:12px;color:rgba(255,255,255,.78);
-      width:max-content;
-    }
-    .meta{font-size:14px;color:var(--muted);line-height:1.7}
-    .ctaRow{display:flex;gap:10px;flex-wrap:wrap}
-    .btn{
-      border:1px solid var(--stroke);
-      background:rgba(255,255,255,.06);
-      color:rgba(255,255,255,.9);
-      padding:10px 14px;border-radius:14px;
-      font-size:13px;cursor:pointer;
-      transition:.2s transform, .2s background;
-    }
-    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.10)}
-    .mini{font-size:12px; padding:9px 12px; border-radius:999px;}
-
-    .sectionTitle{margin:34px 0 14px;display:flex;align-items:center;justify-content:space-between}
-    .sectionTitle h2{margin:0;font-size:16px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.82)}
-    .hint{font-size:12px;color:rgba(255,255,255,.55)}
-
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-    .card{
-      border-radius: var(--r);
-      border:1px solid var(--stroke);
-      background: var(--card);
+      border-radius: var(--radius);
       overflow:hidden;
-      box-shadow: 0 10px 40px rgba(0,0,0,.35);
-      transition:.18s transform, .18s border;
-      cursor: zoom-in;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.28);
+      position:relative;
+      min-height:420px;
     }
-    .card:hover{transform:translateY(-2px); border-color:rgba(255,255,255,.22)}
-    .card img{width:100%;height:280px;object-fit:cover;display:block}
-    .cap{padding:10px 12px;display:flex;justify-content:space-between;gap:10px;font-size:12px;color:rgba(255,255,255,.70)}
-    footer{margin-top:40px;color:rgba(255,255,255,.55);font-size:12px}
-    a{color:inherit}
 
-    /* Lightbox */
-    .lightbox{position:fixed; inset:0; z-index:50; display:none; place-items:center; background:rgba(0,0,0,.75); padding:18px;}
-    .lightbox.open{display:grid}
-    .lightboxInner{
-      max-width:min(1100px, 96vw); max-height:86vh;
-      border-radius:24px; overflow:hidden;
-      border:1px solid rgba(255,255,255,.15);
-      background:rgba(10,10,14,.55);
-      backdrop-filter: blur(12px);
+    /* video tipo reel */
+    .hero video{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      aspect-ratio: 9/16; /* REEL */
+      max-height: 680px;
+      background:#000;
     }
-    .lightboxInner img{max-width:100%; max-height:86vh; display:block;}
-    .lbTop{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.78);font-size:12px;}
-    .x{cursor:pointer; padding:6px 10px; border-radius:10px; border:1px solid rgba(255,255,255,.15)}
-    .x:hover{background:rgba(255,255,255,.08)}
 
-    /* Intro overlay (reel portal) */
-    .intro{
-      position:fixed; inset:0; z-index:60;
-      display:grid; place-items:center;
-      background:rgba(0,0,0,.55);
-      backdrop-filter: blur(10px);
+    .heroOverlay{
+      position:absolute;
+      inset:0;
+      background: radial-gradient(400px 400px at 50% 75%, rgba(0,0,0,.0), rgba(0,0,0,.55));
+      pointer-events:none;
     }
-    .intro.hidden{display:none}
-    .introCard{
-      width:min(420px, 92vw);
+
+    .panel{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      padding:18px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      min-height:420px;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:999px;
       border:1px solid rgba(255,255,255,.16);
-      border-radius:32px;
+      background: rgba(255,255,255,.06);
+      color:rgba(255,255,255,.86);
+      font-size:13px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      user-select:none;
+    }
+
+    .title{
+      font-weight:700;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:20px;
+      margin:0;
+    }
+    .desc{
+      margin:0;
+      color:var(--muted);
+      line-height:1.35;
+      font-size:14px;
+    }
+
+    .ctaRow{
+      margin-top:auto;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      justify-content:flex-start;
+    }
+    .btn{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.18);
+      background: linear-gradient(to bottom, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      color:rgba(255,255,255,.92);
+      padding:12px 16px;
+      border-radius:999px;
+      font-size:14px;
+      box-shadow: 0 14px 40px rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: transform .12s ease;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn:active{transform: translateY(0)}
+
+    .smallBtn{
+      cursor:pointer;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color:rgba(255,255,255,.92);
+      padding:12px 14px;
+      border-radius:999px;
+      font-size:14px;
+    }
+
+    /* gallery */
+    #gallery{
+      display:none; /* se muestra al entrar */
+      padding:18px;
+    }
+
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 14px 0;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-size:16px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.90);
+    }
+    .sectionHead p{
+      margin:0;
+      font-size:13px;
+      color:rgba(255,255,255,.64);
+      max-width:560px;
+      line-height:1.35;
+    }
+
+    .grid{
+      padding:14px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 980px){ .grid{grid-template-columns: repeat(3, 1fr);} }
+    @media (max-width: 700px){ .grid{grid-template-columns: repeat(2, 1fr);} }
+
+    .thumb{
+      border-radius: 16px;
       overflow:hidden;
-      background:rgba(10,10,14,.55);
-      box-shadow: var(--glow);
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.25);
+      position:relative;
+      cursor:pointer;
+    }
+    .thumb img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      aspect-ratio: 4/5;
+      transform: scale(1.02);
+      transition: transform .18s ease;
+    }
+    .thumb:hover img{ transform: scale(1.06); }
+
+    /* lightbox */
+    #lightbox{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.72);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:50;
+      padding:18px;
+    }
+    .lbInner{
+      width:min(1100px, 96vw);
+      max-height: 92vh;
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(15,15,22,.85);
+      box-shadow: 0 30px 80px rgba(0,0,0,.55);
       position:relative;
     }
-
-    .videoWrap{position:relative;}
-    .introVideo{
+    .lbInner img{
       width:100%;
-      max-height:70vh;
-      aspect-ratio: 9 / 16;
+      height:auto;
       display:block;
+      max-height: 92vh;
+      object-fit:contain;
       background:#000;
-      object-fit:cover;
+    }
+    .lbClose{
+      position:absolute;
+      top:12px;
+      right:12px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.10);
+      color:rgba(255,255,255,.92);
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      font-size:14px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
-    /* Performative text overlay */
-    .overlay{
-      position:absolute; inset:0;
-      display:flex; flex-direction:column; justify-content:space-between;
-      padding:14px;
-      pointer-events:none;
-    }
-    .overlayTop{
-      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
-    }
-    .stamp{
-      pointer-events:none;
-      border:1px solid rgba(255,255,255,.16);
-      background:rgba(0,0,0,.25);
-      backdrop-filter: blur(10px);
-      padding:8px 10px;
-      border-radius:16px;
-      font-size:11px;
-      color:rgba(255,255,255,.78);
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      width:max-content;
-      box-shadow: 0 0 30px rgba(122,252,255,.10);
-    }
-    .stamp .dot{display:inline-block;width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.65);margin-right:8px; box-shadow:0 0 12px rgba(122,252,255,.55)}
-
-    .typebox{
-      pointer-events:none;
-      border:1px solid rgba(255,255,255,.16);
-      background:linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.18));
-      backdrop-filter: blur(10px);
-      border-radius:18px;
-      padding:12px 12px;
-      box-shadow: 0 0 40px rgba(255,138,216,.12);
-    }
-    .type{
+    /* footer */
+    .footer{
+      text-align:center;
+      color:rgba(255,255,255,.55);
       font-size:12px;
-      line-height:1.45;
-      color:rgba(255,255,255,.82);
-      white-space:pre-wrap;
-      min-height:40px;
-    }
-    .caret{display:inline-block;width:8px;animation: blink 1s steps(2,end) infinite; color:rgba(255,255,255,.75)}
-    @keyframes blink{50%{opacity:0}}
-
-    .sig{
-      display:flex; gap:10px; align-items:center;
-      font-size:11px; color:rgba(255,255,255,.70);
-      letter-spacing:.14em;
-      text-transform:uppercase;
-    }
-    .sig span{
-      padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.22);
-      box-shadow: 0 0 26px rgba(199,183,255,.10);
-    }
-
-    .introBar{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 16px;}
-    .introTitle{display:flex; flex-direction:column; gap:4px;}
-    .introTitle b{font-size:13px; letter-spacing:.16em; text-transform:uppercase}
-    .introTitle span{font-size:12px; color:rgba(255,255,255,.65)}
-
-    .toast{
-      position:fixed; left:16px; bottom:16px; z-index:70;
-      border:1px solid rgba(255,255,255,.14);
-      background:rgba(0,0,0,.35);
-      color:rgba(255,255,255,.82);
-      padding:10px 12px; border-radius:14px;
-      font-size:12px; backdrop-filter: blur(10px);
-      display:none;
-    }
-    .toast.show{display:block}
-
-    @media (max-width: 900px){
-      .heroGrid{grid-template-columns:1fr}
-      .hero img{min-height:320px}
-      h1{font-size:34px}
+      letter-spacing:.08em;
+      padding:16px 0 0;
     }
   </style>
 </head>
 
 <body>
-  <div class="bg"></div>
-  <div class="symbols" id="symbols"></div>
+  <!-- SYMBOLS CANVAS -->
+  <canvas id="symbolsLayer"></canvas>
 
-  <!-- INTRO OVERLAY (REEL PORTAL) -->
-  <div class="intro" id="intro">
-    <div class="introCard">
-      <div class="videoWrap">
-        <!-- autoplay muted works almost everywhere -->
-        <video class="introVideo" id="introVideo" src="luxemo.mp4" autoplay muted loop playsinline></video>
+  <!-- AUDIO (autoplay real depende de primer click; lo resolvemos en JS) -->
+  <audio id="bgAudio" src="RYA_LUXEMO.wav" loop preload="auto"></audio>
 
-        <!-- performative overlays -->
-        <div class="overlay">
-          <div class="overlayTop">
-            <div class="stamp"><span class="dot"></span>LUXEMO · PORTAL</div>
-            <div class="stamp" style="box-shadow:0 0 30px rgba(255,138,216,.10)">∞ 𓂀 ✶</div>
+  <div class="wrap">
+    <div class="portal">
+      <div class="topbar">
+        <div class="pill">●&nbsp; LUXEMO · PORTAL</div>
+        <div class="icons">∞&nbsp; 𓂀&nbsp; ✶</div>
+      </div>
+
+      <div class="card">
+        <!-- INTRO -->
+        <section id="intro">
+          <div class="hero">
+            <!-- Tu video -->
+            <video id="introVideo" src="luxemo.mp4" autoplay muted loop playsinline></video>
+            <div class="heroOverlay"></div>
           </div>
 
-          <div>
-            <div class="typebox">
-              <div class="type" id="type"></div>
+          <div class="panel">
+            <div class="chips">
+              <div class="chip">AURORA ATELIER</div>
+              <div class="chip">JAZZ × RYA</div>
+              <div class="chip">TEDY R3X</div>
             </div>
-            <div style="height:10px"></div>
-            <div class="sig">
-              <span>Aurora Atelier</span>
-              <span>Jazz × RYA</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="introBar">
-        <div class="introTitle">
-          <b>TEDY R3X</b>
-          <span>Bienvenid@s a la galería — Luxemo Army</span>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end">
-          <button class="btn mini" id="soundBtn" title="Mute / Unmute">Sound: ON</button>
-          <button class="btn mini" id="enterBtn">Bienvenid@s →</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Background music (loop) -->
-  <audio id="bgAudio" src="RYA_LUXEMO.wav" loop autoplay></audio>
-  <div class="toast" id="toast">Tap “Bienvenid@s” to enable sound 🔊</div>
-
-  <div class="wrap" id="main">
-    <header>
-      <div class="brand">
-        <div class="kicker">Aurora Atelier · Wonders Line</div>
-        <h1>TEDY R3X</h1>
-        <p class="sub">Flux Visual Series — talismán urbano: lujo silencioso, iconografía pop y presencia rebelde.</p>
-      </div>
-      <div class="pillbar" aria-label="filters">
-        <div class="pill active" data-filter="all">ALL</div>
-        <div class="pill" data-filter="intro">INTRO</div>
-        <div class="pill" data-filter="reve">REVE</div>
-      </div>
-    </header>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="heroGrid">
-        <img src="REVE/1.png" alt="TEDY R3X — Hero" />
-        <div class="heroSide">
-          <div>
-            <div class="tag">∞ 𓂀 ✶ <span>Supercontext Method</span></div>
-            <p class="meta">
-              Construido con iteración visual (Flux · Nano Banana · Gemini).<br/>
-              Identidad primero: actitud, proporción, material, símbolo.
+            <h1 class="title">Bienvenid@s a la galería — Luxemo Army</h1>
+            <p class="desc">
+              Supercontexto → identidad → forma. Flux / Nano Banana / Gemini como diálogo visual.
+              Luxemos: autoridad de moda y presencia urbana.
             </p>
+
+            <div class="ctaRow">
+              <button id="soundBtn" class="smallBtn" type="button">Sound: ON</button>
+              <button id="enterBtn" class="btn" type="button">Bienvenid@s →</button>
+            </div>
+
+            <div class="footer">Lumina Eterna Ego Sum · ♾️</div>
           </div>
-          <div class="ctaRow">
-            <button class="btn" onclick="openLightbox('REVE/1.png','REVE · 1.png')">View Hero</button>
-            <a class="btn" href="TEDYR3X.pdf" target="_blank" rel="noreferrer">Open PDF</a>
+        </section>
+
+        <!-- GALLERY -->
+        <section id="gallery">
+          <div class="sectionHead">
+            <div>
+              <h2>REVE · Flux Visual Series</h2>
+              <p>Serie consistente y realista. Click para ampliar.</p>
+            </div>
+            <button id="backBtn" class="smallBtn" type="button">← Volver</button>
           </div>
-        </div>
+
+          <div class="grid" id="reveGrid">
+            <!-- REVE: 0..12 -->
+          </div>
+
+          <div class="sectionHead">
+            <div>
+              <h2>INTRO · Frames</h2>
+              <p>Stills del portal / referencias internas.</p>
+            </div>
+          </div>
+
+          <div class="grid" id="introGrid">
+            <!-- INTRO: a..g -->
+          </div>
+
+          <div class="footer">Aurora Atelier — Wonders Line · Moda Urbana</div>
+        </section>
       </div>
-    </section>
-
-    <div class="sectionTitle">
-      <h2>Gallery</h2>
-      <div class="hint">click any piece to zoom</div>
     </div>
-
-    <!-- GALLERY GRID -->
-    <section class="grid" id="grid">
-      <!-- INTRO -->
-      <div class="card" data-group="intro" onclick="openLightbox('INTRO/a.png','INTRO · a.png')"><img src="INTRO/a.png" alt="INTRO a"/><div class="cap"><span>INTRO</span><span>a.png</span></div></div>
-      <div class="card" data-group="intro" onclick="openLightbox('INTRO/b.png','INTRO · b.png')"><img src="INTRO/b.png" alt="INTRO b"/><div class="cap"><span>INTRO</span><span>b.png</span></div></div>
-      <div class="card" data-group="intro" onclick="openLightbox('INTRO/c.png','INTRO · c.png')"><img src="INTRO/c.png" alt="INTRO c"/><div class="cap"><span>INTRO</span><span>c.png</span></div></div>
-      <div class="card" data-group="intro" onclick="openLightbox('INTRO/d.png','INTRO · d.png')"><img src="INTRO/d.png" alt="INTRO d"/><div class="cap"><span>INTRO</span><span>d.png</span></div></div>
-      <div class="card" data-group="intro" onclick="openLightbox('INTRO/e.png','INTRO · e.png')"><img src="INTRO/e.png" alt="INTRO e"/><div class="cap"><span>INTRO</span><span>e.png</span></div></div>
-      <div class="card" data-group="intro" onclick="openLightbox('INTRO/f.png','INTRO · f.png')"><img src="INTRO/f.png" alt="INTRO f"/><div class="cap"><span>INTRO</span><span>f.png</span></div></div>
-      <div class="card" data-group="intro" onclick="openLightbox('INTRO/g.png','INTRO · g.png')"><img src="INTRO/g.png" alt="INTRO g"/><div class="cap"><span>INTRO</span><span>g.png</span></div></div>
-
-      <!-- REVE (ajusta las que quieras mostrar) -->
-      <div class="card" data-group="reve" onclick="openLightbox('REVE/2.png','REVE · 2.png')"><img src="REVE/2.png" alt="REVE 2"/><div class="cap"><span>REVE</span><span>2.png</span></div></div>
-      <div class="card" data-group="reve" onclick="openLightbox('REVE/3.png','REVE · 3.png')"><img src="REVE/3.png" alt="REVE 3"/><div class="cap"><span>REVE</span><span>3.png</span></div></div>
-      <div class="card" data-group="reve" onclick="openLightbox('REVE/4.png','REVE · 4.png')"><img src="REVE/4.png" alt="REVE 4"/><div class="cap"><span>REVE</span><span>4.png</span></div></div>
-      <div class="card" data-group="reve" onclick="openLightbox('REVE/5.png','REVE · 5.png')"><img src="REVE/5.png" alt="REVE 5"/><div class="cap"><span>REVE</span><span>5.png</span></div></div>
-      <div class="card" data-group="reve" onclick="openLightbox('REVE/6.png','REVE · 6.png')"><img src="REVE/6.png" alt="REVE 6"/><div class="cap"><span>REVE</span><span>6.png</span></div></div>
-    </section>
-
-    <footer>
-      Jazz × RYA · Lumina Eterna Ego Sum · ♡ ✧ ✦ ☆ ♩ ♫ ♪ ☀ ✨
-    </footer>
   </div>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-    <div class="lightboxInner" onclick="event.stopPropagation()">
-      <div class="lbTop">
-        <div id="lbTitle">Preview</div>
-        <div class="x" onclick="closeLightbox()">close</div>
-      </div>
-      <img id="lbImg" src="" alt="preview"/>
+  <!-- LIGHTBOX -->
+  <div id="lightbox">
+    <div class="lbInner">
+      <button class="lbClose" id="lbClose" type="button">Cerrar ✕</button>
+      <img id="lbImg" alt="Luxemo" />
     </div>
   </div>
 
   <script>
-    // Symbols (pastel neon)
-    const glyphs = ["∞","𓂀","✶","♡","✧","✦","☆","♩","♫","♪","☀","✨"]; 
-    const symWrap = document.getElementById("symbols");
-    for(let i=0;i<36;i++){
-      const s=document.createElement("div");
-      s.className="sym";
-      s.textContent=glyphs[Math.floor(Math.random()*glyphs.length)];
-      s.style.left=(Math.random()*100)+"vw";
-      s.style.animationDuration=(10+Math.random()*18)+"s";
-      s.style.animationDelay=(-Math.random()*18)+"s";
-      s.style.fontSize=(12+Math.random()*18)+"px";
-      s.style.opacity=(0.25+Math.random()*0.55);
-      // soft neon drift colors
-      const c = ["var(--pink)","var(--cyan)","var(--lilac)"][Math.floor(Math.random()*3)];
-      s.style.color = c;
-      symWrap.appendChild(s);
+    // =========================
+    // 1) AUDIO: autoplay safe
+    // =========================
+    const audio = document.getElementById("bgAudio");
+    const soundBtn = document.getElementById("soundBtn");
+
+    let audioReady = false;
+    let isMuted = false;
+
+    async function startAudio() {
+      if (!audio || audioReady) return;
+      try {
+        audio.muted = false;
+        audio.volume = 0.9;
+        await audio.play();
+        audioReady = true;
+      } catch (e) {
+        audioReady = false; // Safari/Chrome bloquean hasta gesto
+      }
     }
 
-    // Filter
-    const pills=document.querySelectorAll(".pill");
-    const cards=document.querySelectorAll(".card");
-    pills.forEach(p=>{
-      p.addEventListener("click", ()=>{
-        pills.forEach(x=>x.classList.remove("active"));
-        p.classList.add("active");
-        const f=p.dataset.filter;
-        cards.forEach(c=>{
-          const g=c.dataset.group;
-          c.style.display = (f==="all" || f===g) ? "" : "none";
-        });
-      });
+    // primer gesto del usuario desbloquea audio
+    window.addEventListener("pointerdown", startAudio, { once: true });
+    window.addEventListener("keydown", startAudio, { once: true });
+
+    soundBtn?.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await startAudio();
+      if (!audio) return;
+      isMuted = !isMuted;
+      audio.muted = isMuted;
+      soundBtn.textContent = isMuted ? "Sound: OFF" : "Sound: ON";
     });
 
-    // Lightbox
-    function openLightbox(src,title){
-      document.getElementById("lbImg").src=src;
-      document.getElementById("lbTitle").textContent=title||"Preview";
-      document.getElementById("lightbox").classList.add("open");
+    // =========================
+    // 2) NAV intro <-> gallery
+    // =========================
+    const enterBtn = document.getElementById("enterBtn");
+    const backBtn = document.getElementById("backBtn");
+    const intro = document.getElementById("intro");
+    const gallery = document.getElementById("gallery");
+
+    enterBtn?.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await startAudio();
+
+      // mute del video (para que no choque con audio)
+      const vid = document.getElementById("introVideo");
+      if (vid) vid.muted = true;
+
+      if (intro) intro.style.display = "none";
+      if (gallery) gallery.style.display = "block";
+      gallery?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    backBtn?.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (gallery) gallery.style.display = "none";
+      if (intro) intro.style.display = "grid";
+      intro?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    // =========================
+    // 3) Build grids (paths)
+    // =========================
+    const reveGrid = document.getElementById("reveGrid");
+    const introGrid = document.getElementById("introGrid");
+
+    // REVE: 0.png, 1.png, 01.png, 2.png ... 12.png (según tu captura)
+    const reveFiles = ["0.png","1.png","01.png","2.png","3.png","4.png","5.png","6.png","7.png","8.png","9.png","10.png","11.png","12.png"];
+    const introFiles = ["a.png","b.png","c.png","d.png","e.png","f.png","g.png"];
+
+    function addThumb(gridEl, src) {
+      const div = document.createElement("div");
+      div.className = "thumb";
+      const img = document.createElement("img");
+      img.loading = "lazy";
+      img.src = src;
+      img.alt = src;
+      div.appendChild(img);
+      div.addEventListener("click", () => openLightbox(src));
+      gridEl.appendChild(div);
+    }
+
+    reveFiles.forEach(f => addThumb(reveGrid, `REVE/${f}`));
+    introFiles.forEach(f => addThumb(introGrid, `INTRO/${f}`));
+
+    // =========================
+    // 4) Lightbox
+    // =========================
+    const lightbox = document.getElementById("lightbox");
+    const lbImg = document.getElementById("lbImg");
+    const lbClose = document.getElementById("lbClose");
+
+    function openLightbox(src){
+      lbImg.src = src;
+      lightbox.style.display = "flex";
     }
     function closeLightbox(){
-      document.getElementById("lightbox").classList.remove("open");
-      document.getElementById("lbImg").src="";
+      lightbox.style.display = "none";
+      lbImg.src = "";
     }
-    window.openLightbox=openLightbox;
-    window.closeLightbox=closeLightbox;
-    document.addEventListener("keydown",(e)=>{ if(e.key==="Escape") closeLightbox(); });
+    lbClose?.addEventListener("click", closeLightbox);
+    lightbox?.addEventListener("click", (e) => { if (e.target === lightbox) closeLightbox(); });
+    window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
 
-    // Audio logic (autoplay attempt + fallback)
-    const audio = document.getElementById("bgAudio");
-    const toast = document.getElementById("toast");
-    const soundBtn = document.getElementById("soundBtn");
-    const enterBtn = document.getElementById("enterBtn");
-    const intro = document.getElementById("intro");
+    // =========================
+    // 5) Falling symbols canvas
+    // =========================
+    const canvas = document.getElementById("symbolsLayer");
+    const ctx = canvas.getContext("2d");
+    const symbols = ["∞","𓂀","✶","♡","✧","✦","☆","♩","♫","♪","☀","✨"];
+    const drops = [];
+    let W=0,H=0, dpr=1;
 
-    let userMuted = false;
-
-    async function tryPlayAudio(){
-      try{
-        await audio.play();
-        toast.classList.remove("show");
-      }catch(e){
-        toast.classList.add("show");
-      }
-      updateSoundLabel();
-    }
-
-    function updateSoundLabel(){
-      const isMuted = audio.muted || userMuted;
-      soundBtn.textContent = isMuted ? "Sound: OFF" : "Sound: ON";
-    }
-
-    soundBtn.addEventListener("click", async ()=>{
-      userMuted = !userMuted;
-      audio.muted = userMuted;
-      if(!userMuted){
-        await tryPlayAudio();
-      }
-      updateSoundLabel();
-    });
-
-    enterBtn.addEventListener("click", async ()=>{
-      // enable sound on first interaction + close intro
-      if(userMuted){ audio.muted = true; }
-      await tryPlayAudio();
-      intro.classList.add("hidden");
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-    // Performative typed text
-    const typeEl = document.getElementById("type");
-    const lines = [
-      "Lumina Eterna Ego Sum",
-      "TEDY R3X · Urban Authority",
-      "Wonders Line · Aurora Atelier",
-      "∞ 𓂀 ✶  —  enter the gallery"
-    ];
-    const full = lines.map(l=>l).join("
-");
-    let idx = 0;
-
-    function render(){
-      const shown = full.slice(0, idx);
-      typeEl.innerHTML = shown.replace(/
-/g, "<br>") + '<span class="caret">▍</span>';
-    }
-
-    function tick(){
-      if(idx <= full.length){
-        idx += 1;
-        render();
-        const ch = full[idx-1] || "";
-        const speed = ch === "
-" ? 220 : 28 + Math.random()*40;
-        setTimeout(tick, speed);
-      } else {
-        // subtle loop: blink caret forever
-        render();
+    function resize(){
+      dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      W = canvas.width = Math.floor(window.innerWidth * dpr);
+      H = canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = window.innerWidth + "px";
+      canvas.style.height = window.innerHeight + "px";
+      drops.length = 0;
+      const count = Math.floor((window.innerWidth * window.innerHeight) / 45000); // densidad suave
+      for (let i=0;i<count;i++){
+        drops.push({
+          x: Math.random()*W,
+          y: Math.random()*H,
+          s: symbols[(Math.random()*symbols.length)|0],
+          size: (12 + Math.random()*18) * dpr,
+          vy: (0.35 + Math.random()*0.9) * dpr,
+          a: 0.18 + Math.random()*0.28,
+          glow: 8 + Math.random()*18
+        });
       }
     }
 
-    // start attempts
-    tryPlayAudio();
-    tick();
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+
+      for (const p of drops){
+        // pastel neon aurora vibe
+        const t = (p.y/H);
+        const r = Math.floor(180 + 60*Math.sin(t*6.28));
+        const g = Math.floor(160 + 80*Math.sin(t*6.28 + 2));
+        const b = Math.floor(220 + 35*Math.sin(t*6.28 + 4));
+
+        ctx.save();
+        ctx.globalAlpha = p.a;
+        ctx.font = `${p.size}px ui-sans-serif, system-ui`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.shadowBlur = p.glow;
+        ctx.shadowColor = `rgba(${r},${g},${b},.55)`;
+        ctx.fillStyle = `rgba(${r},${g},${b},.85)`;
+        ctx.fillText(p.s, p.x, p.y);
+        ctx.restore();
+
+        p.y += p.vy;
+        if (p.y > H + 40*dpr){
+          p.y = -40*dpr;
+          p.x = Math.random()*W;
+          p.s = symbols[(Math.random()*symbols.length)|0];
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+    draw();
   </script>
 </body>
 </html>
+
